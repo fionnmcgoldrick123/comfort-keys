@@ -1,50 +1,39 @@
-import sys # For command-line arguments to Qt
-
-from PySide6.QtWidgets import (
-    QApplication,  # core Qt app loop
-    QMainWindow,   # main app window
-    QWidget,       # generic container
-    QVBoxLayout,   # vertical layout manager
-    QHBoxLayout,   # horizontal layout manager
-    QLabel,        # display text or image
-    QComboBox,     # dropdown selection
-)
-
-from PySide6.QtCore import Qt 
-from PySide6.QtGui import QPixmap
+import sys
+from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout
+from PySide6.QtCore import Qt
 
 app = QApplication(sys.argv)
 
 window = QMainWindow()
 window.setWindowTitle("Comfort Keys")
 
-#central widget / layout
 central = QWidget()
-main_layout = QVBoxLayout()
-central.setLayout(main_layout)
+main_layout = QVBoxLayout(central)
+main_layout.setContentsMargins(12, 12, 12, 12)
+main_layout.setSpacing(8)
 
-# import header from separate file
+# Header
 from header import header
 main_layout.addWidget(header)
 
+# Row with two columns
 row = QHBoxLayout()
+row.setContentsMargins(0, 0, 0, 0)
+row.setSpacing(12)
 
-from keyboard_layout import left, combo
-main_layout.addWidget(left)
+from keyboard_layout import keyboard_layout
+from mouse_layout import right
 
-from mouse_layout import right, right_combo
-main_layout.addWidget(right)
+# Add ONLY to the row (no duplicates in main_layout)
+row.addWidget(keyboard_layout, stretch=1, alignment=Qt.AlignTop)
+row.addWidget(right,           stretch=1, alignment=Qt.AlignTop)
 
-#layout configuration
-row.addWidget(left)
-row.addWidget(right)
-
+# Attach the row to the main_layout
 main_layout.addLayout(row)
 
-#window configuration
 window.setCentralWidget(central)
 window.setStyleSheet("background-color: #B9CBD9")
-window.setFixedSize(400,200)
+window.setFixedSize(400, 200)
 window.show()
 
 sys.exit(app.exec())
