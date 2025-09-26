@@ -6,7 +6,8 @@ from PySide6.QtWidgets import (
     QWidget,       # generic container
     QVBoxLayout,   # vertical layout manager
     QHBoxLayout,   # horizontal layout manager
-    QLabel         # display text or image
+    QLabel,        # display text or image
+    QComboBox,     # dropdown selection
 )
 
 from PySide6.QtCore import Qt 
@@ -28,21 +29,11 @@ main_layout.addWidget(header)
 
 row = QHBoxLayout()
 
-#left widget
-left = QLabel()
-left.setStyleSheet("background-color: lightblue; border: 1px solid black;")
-left_img = QPixmap("./assets/imgs/mouse.png")
-left_img = left_img.scaled(200,140, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-left.setPixmap(left_img)
-left.setFixedSize(200,140)
+from keyboard_layout import left, combo
+main_layout.addWidget(left)
 
-#right widget
-right = QLabel()
-right.setStyleSheet("background-color: lightblue; border: 1px solid black;")
-right_img = QPixmap("./assets/imgs/keyboard.png")
-right_img = right_img.scaled(200,140, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-right.setPixmap(right_img)
-right.setFixedSize(200,140)
+from mouse_layout import right, right_combo
+main_layout.addWidget(right)
 
 #layout configuration
 row.addWidget(left)
@@ -52,7 +43,7 @@ main_layout.addLayout(row)
 
 #window configuration
 window.setCentralWidget(central)
-window.setStyleSheet("background-color: lightblue;")
+window.setStyleSheet("background-color: #B9CBD9")
 window.setFixedSize(400,200)
 window.show()
 
