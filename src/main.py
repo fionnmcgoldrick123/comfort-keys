@@ -4,8 +4,8 @@ from PySide6.QtWidgets import (
     QApplication,  # core Qt app loop
     QMainWindow,   # main app window
     QWidget,       # generic container
-    QVBoxLayout,   # layout manager
-    QLabel         # simple text label
+    QVBoxLayout,   # vertical layout manager
+    QHBoxLayout    # horizontal layout manager
 )
 
 from PySide6.QtCore import Qt 
@@ -17,17 +17,34 @@ window.setWindowTitle("Comfort Keys")
 
 #central widget / layout
 central = QWidget()
-layout = QVBoxLayout()
-central.setLayout(layout)
+main_layout = QVBoxLayout()
+central.setLayout(main_layout)
 
-#centered header for application
-header = QLabel("comfort-keys")
-header.setStyleSheet("font-size: 24px;")
-header.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-layout.addWidget(header)
+# import header from separate file
+from header import header
+main_layout.addWidget(header)
+
+row = QHBoxLayout()
+
+#left widget
+left = QWidget()
+left.setStyleSheet("background-color: lightblue; border: 1px solid black;")
+left.setFixedSize(200,140)
+
+#right widget
+right = QWidget()
+right.setStyleSheet("background-color: lightblue; border: 1px solid black;")
+right.setFixedSize(200,140)
+
+#layout configuration
+row.addWidget(left)
+row.addWidget(right)
+
+main_layout.addLayout(row)
 
 #window configuration
 window.setCentralWidget(central)
+window.setStyleSheet("background-color: lightblue;")
 window.setFixedSize(400,200)
 window.show()
 
