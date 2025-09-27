@@ -4,7 +4,7 @@ from pathlib import Path
 
 SOUNDS: dict[str, QSoundEffect] = {}
 CURRENT_SOUND: QSoundEffect | None = None
-SOUNDS_PATH = Path("./assets/sounds")
+SOUNDS_PATH = Path("./assets/sounds/")
 
 def load_sounds(parent: QObject | None = None):
     """
@@ -18,11 +18,12 @@ def load_sounds(parent: QObject | None = None):
     Returns:
         None
     """
+    
+    print("Loading sound effect...")
+    
     sounds = {
-        "QWERTY": "qwerty.wav",
-        "AZERTY": "azerty.wav",
-        "DVORAK": "dvorak.wav",
-        "COLEMAK": "colemak.wav",
+        "GAME": "game.wav",
+        "POP": "pop.wav",
     }
 
     for name, path in sounds.items():
@@ -30,9 +31,13 @@ def load_sounds(parent: QObject | None = None):
         eff = QSoundEffect(parent)
         eff.setSource(QUrl.fromLocalFile(str(full_path)))
         eff.setVolume(0.5)
+        
+        SOUNDS[name.lower()] = eff    
 
 
 
-#def set_keyboard_sound(sound_effect):
-#implementation of sound effect when keyboard layout is changed
-
+def set_keyboard_sound(sound_effect):
+    global CURRENT_SOUND
+    CURRENT_SOUND = SOUNDS.get(sound_effect.lower())
+    
+    CURRENT_SOUND.play()
