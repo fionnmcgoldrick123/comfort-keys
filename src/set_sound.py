@@ -36,8 +36,24 @@ def load_sounds(parent: QObject | None = None):
 
 
 
-def set_keyboard_sound(sound_effect):
+def set_keyboard_sound(name: str):
+    """Set CURRENT_SOUND from a string (case-insensitive). Preview it if valid."""
     global CURRENT_SOUND
-    CURRENT_SOUND = SOUNDS.get(sound_effect.lower())
+    if not name:  # empty string
+        return
+    candidate = SOUNDS.get(name.lower())
+    if candidate is None:
+        # Not a sound option; ignore gracefully.
+        print(f"No sound mapped for '{name}'")
+        CURRENT_SOUND = None
+        return
+    CURRENT_SOUND = candidate
     
+    CURRENT_SOUND.stop()
     CURRENT_SOUND.play()
+
+def play_current_sound():
+    """Play the currently selected sound if any."""
+    if CURRENT_SOUND is not None:
+        CURRENT_SOUND.stop()  # helps avoid overlap
+        CURRENT_SOUND.play()

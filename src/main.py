@@ -2,6 +2,8 @@ import sys
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout
 from PySide6.QtCore import Qt
 from set_sound import load_sounds
+from set_sound import load_sounds, play_current_sound
+from input_listener import bridge, start as start_keyboard_hook
 
 app = QApplication(sys.argv)
 
@@ -9,6 +11,10 @@ window = QMainWindow()
 window.setWindowTitle("Comfort Keys")
 
 load_sounds(parent=window) # Load sound effects at application start
+
+bridge.trigger.connect(play_current_sound)
+
+start_keyboard_hook()
 
 central = QWidget()
 main_layout = QVBoxLayout(central)

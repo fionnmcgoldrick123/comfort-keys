@@ -17,7 +17,7 @@ left_label.setPixmap(left_img)
 left_layout.addWidget(left_label, alignment=Qt.AlignTop | Qt.AlignHCenter)
 
 combo = QComboBox()
-combo.addItems(["Select Layout", "GAME", "POP", "DVORAK", "COLEMAK"])
+combo.addItems(["Select Layout", "GAME", "POP"])
 combo.setCurrentIndex(-1)  # No default selection (ok if you're on Qt ≥ 6.7 with placeholder)
 combo.setStyleSheet("font-size: 16px; color: white;")
 combo.setPlaceholderText("Select Layout")
